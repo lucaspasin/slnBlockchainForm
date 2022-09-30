@@ -58,28 +58,11 @@ namespace BlockchainForm.Miner
             block.Nounce = nounce;
         }
 
+        //Merkle
         private string FindMerkleRootHash(IList<Contract> contractList)
         {
             var contractStrList = contractList.Select(contract => CalculateHash(contract.From + contract.To + contract.Amount)).ToList();
             return BuildMerkleRootHash(contractStrList);
-        }
-
-        private static string CalculateHash(string data)
-        {
-            // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
         }
 
         private string BuildMerkleRootHash(IList<string> merkelLeaves)
@@ -101,6 +84,25 @@ namespace BlockchainForm.Miner
                 merkleBranches.Add(CalculateHash(leafPair));
             }
             return BuildMerkleRootHash(merkleBranches);
+        }
+
+        //Criptografia
+        private static string CalculateHash(string data)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                return builder.ToString();
+            }
         }
     }
 }

@@ -43,6 +43,7 @@ namespace BlockchainForm
         {
             _blockMiner.Generate();
             this.txtBlockchain.Text = JsonSerializer.Serialize(_blockMiner.Blockchain);
+            this.txtContractList.Text = string.Empty;
         }
     }
 }
